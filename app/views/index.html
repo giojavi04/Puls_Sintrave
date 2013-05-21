@@ -22,6 +22,7 @@
         <script src="js/vendor/CustomEventSupport.js"></script>
         <script src="js/vendor/ponyExpress.js"></script>
 
+        {% if env == "dev" %}
         <script src="js/init.js"></script>
 
         <script src="js/backbone/models/article.js"></script>
@@ -29,6 +30,7 @@
         <script src="js/backbone/views/article.js"></script>
         <script src="js/backbone/views/articleNew.js"></script>
         <script src="js/backbone/routers/base.js"></script>
+        {% endif %}
     </head>
     <body>
         <header>
@@ -36,11 +38,11 @@
                 <a href=""><img src="/img/logo.png" alt="logo"></a>
             </figure>
             <div id="header_titulo">
-                <h2>Pulse Private Sintrave</h2>
+                <h1>PULSE PRIVATE SINTRAVE</h1>
                 <nav>
                     <ul>
                         <a href=""><li>Home</li></a>
-                        <!--<a href="https://github.com/agreencow/puls3"><li>GitHub</li></a> -->
+                        <a href="https://github.com/agreencow/puls3"><li>GitHub</li></a> 
                     </ul>
                 </nav>
             </div>
@@ -53,20 +55,20 @@
             <aside>
                 <div id="aside_header">
                     <span aria-hidden="true" class="icon-arrow-down"></span>
-                    <h3>Crear un Artículo nuevo</h3>
+                    <h3>Crear Nueva Publicacion</h3>
                 </div>
                 <div id="aside_body">
-                    <p>
-                       <input id="title" type="text" placeholder="Titulo"/>
+                    <p>TITULO:
+                       <input class="input" id="title" type="text" />
                     </p>
-                    <p>
-                       <input id="tag" type="text" placeholder="Tag"/>
+                    <p>TAG:
+                       <input class="input" id="tag" type="text" />
                     </p>
-                    <p>
-                       <input id="content" type="text" placeholder="Contenido"/>
+                    <p>CONTENIDO:
+                       <textarea cols="30" rows="6" id="content" type="text"/></textarea>
                     </p>                    
                     <p>
-                       <button id="create">Crear</button>
+                        <button id="create">Publicar >></button>  
                     </p> 
                 </div>
             </aside>
@@ -104,6 +106,11 @@
                         <h2>{{ post.title }}</h2>
                         <p class="item_posted">Posteado por: <a href="#">{{ post.user }}</a></p>
                         <span aria-hidden="true" class="icon-heart-2"></span>
+                        <div class="item_contenido">
+                        {% autoescape false %}
+                            {{post.content}}
+                        {% endautoescape %}
+                    </div>
                     </div>
                      <div class="item_extra">
                         <p class="extra_tag">{{ post.tag }}</p>
@@ -123,25 +130,31 @@
                 </figure>
                 <div class="item_info">
                     <h2>{{ post.title }}</h2>
-                    <p class="item_posted">Posted by <a href="#">{{ post.user }}</a></p>
+                    <p class="item_posted">Posteado por: <a href="#">{{ post.user }}</a></p>
                     <span aria-hidden="true" class="icon-heart-2"></span>
-                    <div>
+                    <div class="item_contenido">
                     {% autoescape false %}
                         {{post.content}}
                     {% endautoescape %}
                     </div>
                 </div>
                 <div class="item_extra">
-                    <p class ="extra_tag">{{ post.tag }}</p>
                     <div class="extra_likes">
                         <a class="likes_up" href="#"><span aria-hidden="true" class="icon-arrow-up"></span></a>
                         <div class="likes_numero">{{ post.votes }}</div>
                         <a class="likes_down" href="#"><span aria-hidden="true" class="icon-arrow-down"></span></a>
                     </div>
+                    <p class ="extra_tag">{{ post.tag }}</p>
                 </div>
             </article> 
         </script>  
         {% endraw %}   
+        {% if env == "dev" %}
         <script src="js/main.js"></script>
+        {% endif %}
+
+        {% if env == "production" %}
+        <script src="app.min.js"></script>
+        {% endif %}
     </body>
 </html>
